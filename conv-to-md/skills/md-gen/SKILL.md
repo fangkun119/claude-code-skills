@@ -1,12 +1,12 @@
 ---
 name: md-gen
-description: 从 PDF、PPT、DOCX、DOC 文件生成 Markdown 文档。使用 markitdown 工具将各种文档格式转换为 Markdown。在需要将 PDF、PowerPoint、Word 文档转换为 Markdown 格式时使用。
+description: 从 PDF、DOCX、DOC、PPT、PPTX、HTML 文件生成 Markdown 文档。使用 markitdown 工具将各种文档格式转换为 Markdown。在需要将 PDF、PowerPoint、Word、HTML 文档转换为 Markdown 格式时使用。
 allowed-tools:
   - Bash
 ---
 # Markdown 文档生成
 
-将 PDF、PPT、DOCX、DOC 文件转换为 Markdown 格式。
+将 PDF、DOCX、DOC、PPTX、PPT 文件转换为 Markdown 格式。
 
 ## 前提条件
 
@@ -76,6 +76,7 @@ markitdown --version
 - PDF 文件：`.pdf`
 - PowerPoint 文件：`.ppt`, `.pptx`
 - Word 文件：`.doc`, `.docx`
+- HTML 文件：`.html`
 
 #### 基本转换
 
@@ -93,6 +94,9 @@ markitdown path-to-file.docx > path-to-file.md
 # 转换 PowerPoint 文件
 markitdown path-to-file.ppt > path-to-file.md
 markitdown path-to-file.pptx > path-to-file.md
+
+# 转换 HTTP 文件
+markitdown path-to-file.html > path-to-file.md
 ```
 
 #### 批量转换
@@ -110,6 +114,24 @@ done
 for file in *.docx; do
     markitdown "$file" > "${file%.docx}.md"
 done
+
+for file in *.doc; do
+    markitdown "$file" > "${file%.docx}.md"
+done
+
+# 转换当前目录下所有的PPT文件
+for file in *.pptx; do
+    markitdown "$file" > "${file%.docx}.md"
+done
+
+for file in *.ppt; do
+    markitdown "$file" > "${file%.docx}.md"
+done
+
+# 转换当前目录下所有的HTML文件
+for file in *.html; do
+    markitdown "$file" > "${file%.docx}.md"
+done
 ```
 
 ## 输出文件命名
@@ -118,7 +140,10 @@ done
 
 - `document.pdf` → `document.md`
 - `presentation.pptx` → `presentation.md`
+- `presentation.ppt` → `presentation.md`
 - `report.docx` → `report.md`
+- `report.doc` → `report.md`
+- `page.html` → `page.md`
 
 ## 注意事项
 
