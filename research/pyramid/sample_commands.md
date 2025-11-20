@@ -1,5 +1,7 @@
 # Sample Command to Run the Agent
 
+# V 1.0.0 - 1.0.3
+
 ## 1. 文章改写
 
 按照金字塔原理，对文章进行改写
@@ -63,6 +65,16 @@
 
 ```
 
+
+# V 0.1.0 
+
+```text
+先执行 @agent-pyramid:md-rewriter 处理 @research/pyramid/example/rewriter-with-charts/long_complex_book.md , 然后用 @agent-pyramid:md-content-gap-filler 处理生成的 long_complex_book_rewritten.md , 最后再用 @agent-pyramid:md-chapter-refiner 依次完善 long_complex_book_rewritten.md 中的每一章
+
+
+先执行 @agent-pyramid:md-content-gap-filler @research/pyramid/example/rewriter-with-charts/long_complex_book_rewritten.md 然后再用 @agent-pyramid:md-chapter-refiner 完善 
+@research/pyramid/example/rewriter-with-charts/long_complex_book_rewritten.md 中的每一章, 结果更新到 @research/pyramid/example/rewriter-with-charts/long_complex_book_rewritten.md 
+```
 
 
 
