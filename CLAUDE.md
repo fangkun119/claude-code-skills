@@ -112,3 +112,4 @@ This repository heavily implements Barbara Minto's Pyramid Principle:
 - Focus is on document processing and text enhancement workflows
 - Version history is maintained for both development and research purposes
 - The repository structure supports systematic experimentation with different AI-assisted writing methodologies.
+- 再加一点限制,code block前面要有一行空行,并且```不要有任何缩进. 你看看这个限制加在提示词哪里比较好 @pyramid/commands/md-pyramid-rewrite.md
