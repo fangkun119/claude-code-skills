@@ -12,7 +12,7 @@
 执行10轮迭代语音转录稿纠错，每一轮都会：
 1. 分析当前文档状态，识别剩余的语音识别错误
 2. 基于专业领域背景生成针对性的纠错策略
-3. 调用 `/md-fix-transcription` 命令执行纠错
+3. 用Task工具执行 `pyramid:md-fix-transcription` 这个Claude Code Slash Command来进行纠错
 4. 记录纠错结果和改进情况
 
 ## 执行流程
