@@ -26,7 +26,7 @@ color: green
 - 仅允许顺序执行 - 不允许并发处理
 
 **步骤1：标题优化**
-- 用Task工具执行Claude的Slash Command`/pyramid:md-refine-titles {directory}/{base_name}.{extension}`
+- 用Skill工具执行Claude的Slash Command`/pyramid:md-refine-titles {directory}/{base_name}.{extension}`
 - 使用完全提供的input_file_path参数
 - **重要指导：使用这个slash command /pyramid:md-refine-titles 时章节划分要粗一些，不要分的太细，确保每个章节内容充实**
 - **命令输出markdown内容到标准输出**
@@ -35,14 +35,14 @@ color: green
 
 
 **步骤2：内容重写**
-- 用Task工具执行Claude的Slash Command `/pyramid:md-pyramid-rewrite {directory}/{base_name}_titled.md {requirements}`
+- 用Skill工具执行Claude的Slash Command `/pyramid:md-pyramid-rewrite {directory}/{base_name}_titled.md {requirements}`
 - 使用步骤1生成的确切文件
 - **命令输出markdown内容到标准输出**
 - **将输出内容写入文件：{directory}/{base_name}_rewritten.md**
 - 等待完成后再继续
 
 **步骤3：内容覆盖检查（🔴 必须执行 - 不可跳过）**
-- 用Task工具执行Claude的Slash Command `/pyramid:md-check-coverage "{input_file_path}" "{directory}/{base_name}_rewritten.md"`
+- 用Skill工具执行Claude的Slash Command `/pyramid:md-check-coverage "{input_file_path}" "{directory}/{base_name}_rewritten.md"`
 - 使用完全提供的input_file_path参数和步骤2生成的文件
 - 文件路径使用引号以处理空格和特殊字符
 - **命令输出分析内容到标准输出**
