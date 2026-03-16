@@ -41,12 +41,12 @@ color: green
 - **将输出内容写入文件：{directory}/{base_name}_structured.md**
 - 等待完成后再继续
 
-**步骤3：表达风格优化**
-- 用Skill工具执行Claude的Slash Command `/pyramid:md-refine-expression {directory}/{base_name}_structured.md`
-- 使用步骤2生成的确切文件
-- **命令输出markdown内容到标准输出**
-- **将输出内容写入文件：{directory}/{base_name}_rewritten.md**
-- **等待完成后再继续**
+**步骤3：措辞优化**
+- 读取 {directory}/{base_name}_structured.md 的内容
+- 通过修改措辞的方式优化文档，提升准确度、清晰度、流畅度
+- **执行指导**：你是语言表达专家。请优化提供给你的markdown文档的措辞，提升其准确度、清晰度、流畅度。要求：结构和内容100%保持不变，仅优化语言表达；代码块、图片、链接、HTML标签等元素保持不变；使用UTF-8编码输出完整的markdown内容。文档路径：{directory}/{base_name}_structured.md 
+- **将优化后的内容写入文件：{directory}/{base_name}_rewritten.md**
+- 等待完成后再继续
 
 **步骤4：内容覆盖检查（🔴 必须执行 - 不可跳过）**
 - 用Skill工具执行Claude的Slash Command `/pyramid:md-check-coverage "{input_file_path}" "{directory}/{base_name}_rewritten.md"`
