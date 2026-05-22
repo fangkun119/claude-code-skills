@@ -22,9 +22,17 @@ allowed-tools:
 
 ## 执行步骤
 
-### 1. 定位脚本
+### 1. 环境准备
 
-脚本位于本 skill 的 `scripts/archive_dir.py`，使用项目 `.venv` 中的 Python 执行。
+确保 Python ≥3.12 和 `uv` 已安装。如果用户工作目录下没有 `.venv`，则创建：
+
+```bash
+if [ -d ".venv" ]; then
+  echo "[INFO] 复用已有 .venv"
+else
+  uv venv --python=3.12 .venv
+fi
+```
 
 ### 2. 运行归档
 
@@ -53,6 +61,7 @@ allowed-tools:
 
 ## 前提条件
 
-- Python 3.12+（项目 `.venv` 已配置）
+- Python ≥3.12 已安装且可在 `$PATH` 调用
+- `uv` 包管理器已安装（`uv --version` 可返回版本号）
 - 目标目录存在且可读
-- 输出路径可写
+- 工作目录可写（用于创建 `.venv`）
