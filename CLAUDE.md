@@ -2,114 +2,59 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+## Project Purpose
 
-This is a research and experimentation repository for Claude Code capabilities, focusing on implementing Slash Commands, MCP (Model Context Protocol) servers, Sub-Agents, and document processing workflows.
+This repo is a **Claude Code plugin marketplace** (`office-tool-marketplace`) containing two plugins published via the Claude Code plugin system. It also houses development workspaces, regression tests, and chat transcripts for plugin development.
 
-## Repository Structure
+## Plugin Architecture
 
-### Core Directories
+### Marketplace Entry Point
 
-- **`.claude/`**: Claude Code configuration and permissions
-  - `settings.local.json`: Permissions configuration for allowed commands
-- **`tasks/`**: Main workspace for different task types
-  - `tasks/note/`: Document rewriting and note generation workflows
-  - `tasks/convert/`: Document conversion (PDF, PPT) processing
+`.claude-plugin/marketplace.json` registers all plugins with their source paths. Plugins are installed by users via `/plugin marketplace add` and `/plugin install`.
 
-### Document Processing Architecture
+### pyramid Plugin
 
-The repository implements a sophisticated document processing pipeline based on the Pyramid Principle:
+Document rewriting based on Barbara Minto's Pyramid Principle.
 
-#### Reference Materials (`tasks/note/reference/`)
-- **Pyramid Principle guides**: Comprehensive writing methodology based on Barbara Minto's framework
-- **Persuasive writing techniques**: Methods for argument construction and issue analysis
-- These serve as knowledge bases for agent prompt engineering
+- **agents/**: Sub-agents invoked by Claude Code
+  - `md-rewriter` — orchestrates the 5-step rewrite workflow (title refinement → content rewrite → gap filling → coverage check)
+  - `md-content-gap-filler` — fills gaps between original and rewritten content
+  - `transcription-corrector` — corrects voice-to-text transcription errors
+- **commands/**: Slash commands invoked by users
+  - `md-pyramid-rewrite` — main rewrite command (expression optimization + bold strategy)
+  - `md-refine-titles` — title/heading optimization
+  - `md-refine-expression` — expression refinement
+  - `md-check-coverage` — verify original content coverage in rewritten output
+  - `md-fix-transcription` — fix voice transcription artifacts
 
-#### Test Files (`tasks/note/test/`)
-- Sample documents for testing: narrative, expository, persuasive texts
-- Used for validating document processing workflows
+### note-tool Plugin
 
-#### Historical Versions (`tasks/note/history/versions/`)
-- Timestamped snapshots of agent and command configurations
-- Tracks evolution of document processing capabilities
-- Format: `YYYYMMDD_HH/` containing agents/ and commands/ subdirectories
+Document format conversion and directory archiving.
 
-## Claude Code Components
+- **skills/doc-to-md/**: Converts PDF/DOCX/DOC/PPT/PPTX/HTML to Markdown using `markitdown==0.1.3` in a Python 3.12+ venv. Uses TUNA PyPI mirror for dependency installation.
+- **skills/dir-archive/**: Archives directories to `.tar.gz` with incremental update support. Includes a Python script at `scripts/archive_dir.py`.
 
-### Permissions Configuration
-The `.claude/settings.local.json` defines allowed operations:
-- Directory creation commands
-- Document processing slash commands (`/re-wt:md-*`)
-- Specific workflow commands for text refinement
+### Key Convention: Plugin Structure
 
-### Slash Commands (Historical)
-Located in versioned directories, these commands implement:
-- `/doc-pyramid-rewrite`: Document restructuring using Pyramid Principle
-- `/doc-highlight-persuasive-structure`: Persuasive analysis enhancement
-- `/doc-refine-titles`: Title optimization
-- `/doc-fluent`: Text fluency improvement
-- `/doc-warn-logic-flaw`: Logic validation
-- `/doc-check-coverage`: Content coverage analysis
+Each plugin lives in its own top-level directory with:
+```
+<plugin-name>/
+  .claude-plugin/
+    plugin.json          # name, description, version, author
+  agents/                # sub-agents (markdown frontmatter: name, description, model, color)
+  commands/              # slash commands (markdown with usage instructions)
+  skills/                # skills (SKILL.md with frontmatter: name, description, allowed-tools)
+```
 
-### Sub-Agents (Historical)
-Specialized agents for document processing:
-- `doc-polisher`: Text fluency and readability enhancement
-- `doc-rewriter`: Comprehensive document restructuring pipeline
+## Development Directories
 
-## Development Workflow
+- **repo-desktop/workspaces/**: Development workspaces for each plugin (pyramid, note-tool)
+- **repo-desktop/regression/**: Regression test specs (markdown format) for plugin features
+- **repo-desktop/chats/**: Chat transcripts and notes from plugin development sessions
+- **.claude/commands/**: Project-level slash commands (e.g., `md-fix-voice-text`)
 
-### Document Processing Tasks
-1. **Input**: Raw text files in `tasks/note/test/`
-2. **Processing**: Apply specialized agents/commands based on document type
-3. **Output**: Rewritten documents with enhanced structure, logic, and readability
+## Runtime Dependencies
 
-### Agent Development
-- Agents are configured as markdown files with specific prompts
-- Historical versions track prompt evolution and effectiveness
-- New agents should follow the established naming convention and directory structure
-
-### Command Development
-- Slash commands are defined as markdown workflows
-- Commands leverage the Pyramid Principle methodology
-- Permission updates required in `.claude/settings.local.json` for new commands
-
-## Key Methodologies
-
-### Pyramid Principle Application
-This repository heavily implements Barbara Minto's Pyramid Principle:
-- **Conclusion first**: Start with main conclusions
-- **Logical grouping**: MECE (Mutually Exclusive, Collectively Exhaustive) categorization
-- **Hierarchical structure**: Clear parent-child relationships between ideas
-- **Question-answer flow**: Natural progression from reader questions to answers
-
-### Document Types Handled
-- **Narrative texts**: Storytelling and descriptive content
-- **Expository texts**: Informational and educational content
-- **Persuasive texts**: Argumentative and analytical content
-- **Technical documentation**: Process and technical explanations
-
-## Common Development Tasks
-
-### Adding New Document Processing Workflows
-1. Create test cases in `tasks/note/test/`
-2. Develop agent configurations in appropriate versioned directory
-3. Update permissions in `.claude/settings.local.json`
-4. Test with existing reference materials
-
-### Managing Agent Versions
-- Use timestamped directories for version control
-- Maintain backward compatibility when possible
-- Document changes in agent configuration files
-
-### Processing New Document Types
-- Add reference materials to `tasks/note/reference/`
-- Create specialized test cases
-- Develop targeted processing workflows
-
-## Notes
-
-- This is primarily a research repository for Claude Code capabilities
-- Focus is on document processing and text enhancement workflows
-- Version history is maintained for both development and research purposes
-- The repository structure supports systematic experimentation with different AI-assisted writing methodologies.
-- 再加一点限制,code block前面要有一行空行,并且```不要有任何缩进. 你看看这个限制加在提示词哪里比较好 @pyramid/commands/md-pyramid-rewrite.md
+- Python ≥3.12 + `uv` package manager (for note-tool skills)
+- `markitdown[all]==0.1.3` (installed on-demand into `.venv`)
+- TUNA PyPI mirror (`https://pypi.tuna.tsinghua.edu.cn/simple/`) used for Chinese network acceleration
