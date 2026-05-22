@@ -60,7 +60,7 @@ claude
 @agent-pyramid:md-polisher @my_file_rewritten.md "检查逻辑" 
 ```
 
-文档转换技能：通过自然语言触发，如果在提示词中提到这个skill的名称`note-tool:md-gen`可以对skill触发率有更好的保证
+文档转换技能：通过自然语言触发，如果在提示词中提到这个skill的名称`note-tool:doc-to-md`可以对skill触发率有更好的保证
 
 ```txt
 将 @to_path/myfile.docx 转换成 markdown

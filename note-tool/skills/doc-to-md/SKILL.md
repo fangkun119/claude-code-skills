@@ -1,5 +1,5 @@
 ---
-name: md-gen
+name: doc-to-md
 description: |
   将 PDF/DOCX/DOC/PPT/PPTX/HTML 批量转换为 Markdown。
   依赖 markitdown 0.1.3，运行在 Python 3.12+ 虚拟环境。
@@ -24,14 +24,14 @@ allowed-tools:
 | 术语/缩写 | 含义 |
 |-----------|------|
 | venv      | Python 虚拟环境目录，固定名 `.venv` |
-| md-gen    | 本技能在 Claude Code 中的注册名 |
+| doc-to-md | 本技能在 Claude Code 中的注册名 |
 | TUNA      | 清华大学 PyPI 镜像，用于加速依赖下载 |
 
 # 4 职责（Responsibility）
 | 岗位/角色 | 职责 |
 |-----------|------|
 | 用户（User） | 1. 提供待转文件&lt;br&gt;2. 检查输出结果 |
-| md-gen Skill | 1. 自动检测依赖&lt;br&gt;2. 执行转换命令&lt;br&gt;3. 返回状态码与日志 |
+| doc-to-md Skill | 1. 自动检测依赖&lt;br&gt;2. 执行转换命令&lt;br&gt;3. 返回状态码与日志 |
 
 # 5 前提条件（Prerequisites）
 执行本 SOP 前，系统必须满足：
