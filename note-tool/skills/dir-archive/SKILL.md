@@ -29,7 +29,7 @@ allowed-tools:
 ### 2. 运行归档
 
 ```bash
-.venv/bin/python conv-to-md/skills/dir-archive/scripts/archive_dir.py "<用户传入的目录路径>"
+.venv/bin/python note-tool/skills/dir-archive/scripts/archive_dir.py "<用户传入的目录路径>"
 ```
 
 ### 3. 输出说明

@@ -15,7 +15,7 @@
    - 功能：根据Barbara Minto的《金字塔原理》重写文本文档（txt, md）
    - 包含命令：文档重构、说服力分析、标题优化、逻辑检查等
 
-2. **conv-to-md** - 文档格式转换工具
+2. **note-tool** - 文档格式转换工具
    - 功能：将各种文档格式（pdf, docx, doc, pptx, ppt）转换为Markdown
    - 使用markitdown工具进行转换
 
@@ -32,7 +32,7 @@
 
 # 3. 或者直接安装特定插件
 /plugin install pyramid@office-tool-marketplace
-/plugin install conv-to-md@office-tool-marketplace
+/plugin install note-tool@office-tool-marketplace
 ```
 
 还可以从本地添加`插件市场`，下面是演示
@@ -60,7 +60,7 @@ claude
 @agent-pyramid:md-polisher @my_file_rewritten.md "检查逻辑" 
 ```
 
-文档转换技能：通过自然语言触发，如果在提示词中提到这个skill的名称`conv-to-md:md-gen`可以对skill触发率有更好的保证
+文档转换技能：通过自然语言触发，如果在提示词中提到这个skill的名称`note-tool:md-gen`可以对skill触发率有更好的保证
 
 ```txt
 将 @to_path/myfile.docx 转换成 markdown
@@ -108,7 +108,7 @@ claude
 * `agents/`：包含文档润色和重写的Sub-Agents
 * `commands/`：包含文档重构、标题优化等Slash Commands
 
-### 3.4 `conv-to-md`
+### 3.4 `note-tool`
 
 功能：文档格式转换插件
 
@@ -124,5 +124,5 @@ claude
 目录结构：
 
 * `pyramid/`：金字塔原理插件的开发和调试
-* `conv-to-md/`：文档转换插件的开发和调试
+* `note-tool/`：文档转换插件的开发和调试
 

@@ -10,8 +10,8 @@
       "description": "Rewrite text document (txt, md) according to \"The Pyramid Principle\" by Barbara Minto"
     },
     {
-      "name": "conv-to-md",
-      "source": "./conv-to-md",
+      "name": "note-tool",
+      "source": "./note-tool",
       "description": "Convert document (pdf, docx, dopc, pptx, ppt) to markdown"
     }
   ]
