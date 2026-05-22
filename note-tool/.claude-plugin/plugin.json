@@ -1,7 +1,7 @@
 {
     "name": "note-tool",
     "description": "Convert document (pdf, docx, dopc, pptx, ppt) to markdown",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "author": {
         "name": "Kun"
     }
