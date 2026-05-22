@@ -1,0 +1,8 @@
+# create skill 
+
+创建一个claude skill，用于archive一个目录。
+传入给它要归档的文件路径, 例如"./to_path/target_dir/"，它会执行如下操作：
+1. 首先会检查 ./to_path/target_dir.tar.gz 是否存在
+2. 如果不存在，就用 ./to_path/target_dir/ 这个目录创建 ./to_path/target_dir.tar.gz
+3. 如果存在，就把 ./to_path/target_dir/ 下所有文件添加到 ./to_path/target_dir.tar.gz ，如果要添加的文件在 tar.gz 文件中已经存在，就覆盖掉原来的文件（注意，它只会添加或覆盖文件，不会删除文件）
+
