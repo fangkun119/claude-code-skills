@@ -53,6 +53,10 @@ Each plugin lives in its own top-level directory with:
 - **repo-desktop/chats/**: Chat transcripts and notes from plugin development sessions
 - **.claude/commands/**: Project-level slash commands (e.g., `md-fix-voice-text`)
 
+## Python Development
+
+Use `uv` to create a Python 3.12 venv (`.venv`) for any Python code in this repo. Reuse existing `.venv` if present.
+
 ## Runtime Dependencies
 
 - Python ≥3.12 + `uv` package manager (for note-tool skills)
