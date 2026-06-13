@@ -1,18 +1,13 @@
 {
-  "name": "office-tool-marketplace",
+  "name": "fangkun119",
   "owner": {
     "name": "Kun"
   },
   "plugins": [
     {
-      "name": "pyramid",
-      "source": "./pyramid",
-      "description": "Rewrite text document (txt, md) according to \"The Pyramid Principle\" by Barbara Minto"
-    },
-    {
       "name": "note-tool",
       "source": "./note-tool",
-      "description": "Convert document (pdf, docx, dopc, pptx, ppt) to markdown"
+      "description": "Document format conversion and directory archiving"
     }
   ]
 }
