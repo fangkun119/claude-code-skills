@@ -4,12 +4,5 @@
     "version": "1.2.2",
     "author": {
         "name": "Kun"
-    },
-    "skills": [
-        "skills/doc-to-md",
-        "skills/dir-archive",
-        "skills/text-style",
-        "skills/md-rewrite",
-        "skills/transcription-correct"
-    ]
+    }
 }
