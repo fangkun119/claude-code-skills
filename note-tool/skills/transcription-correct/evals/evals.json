@@ -1,0 +1,26 @@
+{
+  "skill_name": "transcription-correct",
+  "evals": [
+    {
+      "id": 1,
+      "name": "seata-technical-transcription",
+      "prompt": "Fix the voice transcription errors in repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample.md. The domain is about SEATA distributed transactions - key terms include Seata, Spring Cloud Alibaba, Spring Boot, AT mode, TC, TM, RM, XA, TCC, SAGA, two-phase commit, 2PC, global transaction, branch transaction, XID, undo log, global lock, local lock, @GlobalTransactional, @GlobalLock, OpenFeign, Netty, Remoting protocol, read isolation, write isolation, dirty read, read committed, read uncommitted, SELECT FOR UPDATE, tx-service-group, JDBC, MySQL, Oracle, Dameng database, before-image, after-image, feature-dev branch.",
+      "expected_output": "A corrected markdown file at repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample_corrected.md with voice recognition errors fixed, particularly homophone errors and technical terminology corrections. The file should maintain proper markdown formatting and preserve the original meaning.",
+      "files": ["repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample.md"]
+    },
+    {
+      "id": 2,
+      "name": "auto-detect-domain-context",
+      "prompt": "Correct the voice transcription errors in repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample.md. I don't have specific domain information, but it's a technical lecture.",
+      "expected_output": "A corrected markdown file at repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample_corrected.md. The skill should auto-detect this is about distributed transactions/SEATA from the content and apply appropriate corrections.",
+      "files": ["repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample.md"]
+    },
+    {
+      "id": 3,
+      "name": "specify-correction-rounds",
+      "prompt": "Fix the transcription in repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample.md with 2 correction rounds. Domain: SEATA distributed transactions framework.",
+      "expected_output": "A corrected markdown file after exactly 2 correction rounds, with iterative improvements applied.",
+      "files": ["repo-desktop/workspaces/note-tool/transcription-correct/transcription-sample.md"]
+    }
+  ]
+}
