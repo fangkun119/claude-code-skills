@@ -2,7 +2,7 @@
 name: doc-to-md
 description: |
   将 PDF/DOCX/DOC/PPT/PPTX/HTML 批量转换为 Markdown。
-  依赖 markitdown 0.1.3，运行在 Python 3.12+ 虚拟环境。
+  依赖 markitdown 0.1.5，运行在 Python 3.12+ 虚拟环境。
 allowed-tools:
   - Bash
 ---
@@ -59,7 +59,7 @@ source .venv/bin/activate
 
 ```bash
 export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple/
-uv pip install markitdown[all]==0.1.3
+uv pip install markitdown[all]==0.1.5
 markitdown --version # 预期该命令可以成功执行
 ```
 
@@ -102,7 +102,7 @@ done
 1. 输出文件默认覆盖同名 .md，不保留旧版本；如需版本管理，请提前 git add。
 2. 复杂排版、合并单元格、批注、动画等元素可能丢失，需人工校验。
 3. 扫描版 PDF 不含文本层时，转换结果为空，请先执行 OCR。
-4. 本 Skill 锁定 markitdown==0.1.3，升级须走变更控制（参见第 9 章）。
+4. 本 Skill 锁定 markitdown==0.1.5，升级须走变更控制（参见第 9 章）。
 
 
 ## 9 相关文件与附件（References）
@@ -114,6 +114,7 @@ done
 
 | 版本   | 日期         | 修订人    | 变更摘要                                  |
 | ---- | ---------- | ------ | ------------------------------------- |
+| v1.1 | 2026-06-14 | Claude | 升级 markitdown 从 0.1.3 到 0.1.5 |
 | v1.0 | 2025-06-01 | Claude | 首版，支持 pdf/doc/docx/ppt/pptx/html → md |
 
 
