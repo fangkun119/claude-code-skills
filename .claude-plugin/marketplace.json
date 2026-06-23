@@ -5,9 +5,9 @@
   },
   "plugins": [
     {
-      "name": "note-tool",
-      "source": "./note-tool",
-      "description": "Document format conversion and directory archiving"
+      "name": "note",
+      "source": "./note",
+      "description": "markdown document format conversion and rewriting toolset"
     }
   ]
 }

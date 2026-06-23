@@ -6,7 +6,7 @@
 
 ## 2 可用插件
 
-1. **note-tool** - 文档格式转换与改写工具集
+1. **note** - 文档格式转换与改写工具集
    - **doc-to-md**：将各种文档格式（PDF、DOCX、DOC、PPT、PPTX、HTML）转换为 Markdown
    - **md-rewrite**：四阶段 Markdown 文档专业改写（准备 → 需求澄清 → 文档改写 → 质量检查）
    - **md-img-to-html**：将 Markdown 文档中的图片转换为 HTML `<img>` 标签
