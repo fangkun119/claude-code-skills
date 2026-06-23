@@ -14,10 +14,14 @@ This repo is a **Claude Code plugin marketplace** (`office-tool-marketplace`) co
 
 ### note-tool Plugin
 
-Document format conversion and directory archiving.
+Document format conversion, content styling, directory archiving, and document rewriting.
 
 - **skills/doc-to-md/**: Converts PDF/DOCX/DOC/PPT/PPTX/HTML to Markdown using `markitdown==0.1.3` in a Python 3.12+ venv. Uses TUNA PyPI mirror for dependency installation.
 - **skills/dir-archive/**: Archives directories to `.tar.gz` with incremental update support. Includes a Python script at `scripts/archive_dir.py`.
+- **skills/md-img-to-html/**: Converts all image formats in Markdown documents to HTML `<img>` tags. Supports standard Markdown format `![alt](path)` and Obsidian wikilink format `![[path]]`, including their width variants. Handles alt attribute checking and filling for existing HTML `<img>` tags.
+- **skills/text-style/**: Applies HTML/CSS styles to specified text content using `<span>` tags with style attributes. Supports color, font size, background, borders, padding, and other CSS properties.
+- **skills/transcription-correct/**: Corrects voice recognition errors in markdown transcription files using domain knowledge and iterative refinement. Handles large files by chunking content and uses multiple correction rounds.
+- **skills/md-rewrite/**: Four-phase Markdown document rewriting skill: Phase 1 environment setup → Phase 2 requirements clarification (6-round interaction) → Phase 3 content rewriting → Phase 4 quality checks and title system validation. Supports writing style adjustment, chapter restructuring, content optimization, and target audience adaptation.
 
 ### Key Convention: Plugin Structure
 
