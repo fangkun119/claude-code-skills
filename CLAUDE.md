@@ -12,21 +12,6 @@ This repo is a **Claude Code plugin marketplace** (`office-tool-marketplace`) co
 
 `.claude-plugin/marketplace.json` registers all plugins with their source paths. Plugins are installed by users via `/plugin marketplace add` and `/plugin install`.
 
-### pyramid Plugin
-
-Document rewriting based on Barbara Minto's Pyramid Principle.
-
-- **agents/**: Sub-agents invoked by Claude Code
-  - `md-rewriter` — orchestrates the 5-step rewrite workflow (title refinement → content rewrite → gap filling → coverage check)
-  - `md-content-gap-filler` — fills gaps between original and rewritten content
-  - `transcription-corrector` — corrects voice-to-text transcription errors
-- **commands/**: Slash commands invoked by users
-  - `md-pyramid-rewrite` — main rewrite command (expression optimization + bold strategy)
-  - `md-refine-titles` — title/heading optimization
-  - `md-refine-expression` — expression refinement
-  - `md-check-coverage` — verify original content coverage in rewritten output
-  - `md-fix-transcription` — fix voice transcription artifacts
-
 ### note-tool Plugin
 
 Document format conversion and directory archiving.
@@ -64,13 +49,15 @@ Use `uv` to create a Python 3.12 venv (`.venv`) for any Python code in this repo
 - `markitdown[all]==0.1.3` (installed on-demand into `.venv`)
 - TUNA PyPI mirror (`https://pypi.tuna.tsinghua.edu.cn/simple/`) used for Chinese network acceleration
 
-<!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
-<!-- SPECKIT END -->
 
 ## Naming Convensions
 
 Naming must use precise, clear, and concise phrasing to express its meaning. For example, you can use names like ‘titles_scripts_tests’ to precisely indicate the test subject, while names like ‘quest_check_tests’ that are vague and general should not be used.
+
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
 
 
