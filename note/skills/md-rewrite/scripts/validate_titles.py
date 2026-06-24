@@ -276,6 +276,36 @@ def parse_all_titles(file_path: str) -> List[TitleInfo]:
                         ))
                         break
 
+            # 如果严格模式和宽松模式都不匹配，再检查是否是"无编号标题"
+            # 这一层很重要：真实文档中常见的 `## 执行引擎是什么` 这种纯文本标题，
+            # 既不匹配严格模式（要求数字编号）也不匹配宽松模式（也要求至少一个数字），
+            # 但它们确实是 Markdown 标题，违反了四级标题体系规范。
+            # 如果不识别它们，validate_titles.py 会漏报，Phase 4 形同虚设。
+            if not any(t.line_num == line_num for t in titles):
+                # 匹配 ##/###/####/##### 开头但后面是非空白字符的行
+                # （排除 ##  后只有空格或空内容的情况，那是"空标题"由其他检查处理）
+                bare_title_match = re.match(r'^(#{2,5})\s+(\S.*)$', line)
+                if bare_title_match:
+                    prefix = bare_title_match.group(1)
+                    content = bare_title_match.group(2)
+                    # 注意：标题层级（用于 SKILL.md 的 Level 1-4 体系）与 # 的数量是映射关系
+                    # ## → Level 1、### → Level 2、#### → Level 3、##### → Level 4
+                    # 不能直接用 len(prefix)，否则 ## 会被错误标记为 Level 2
+                    prefix_to_level = {"##": 1, "###": 2, "####": 3, "#####": 4}
+                    level_num = prefix_to_level.get(prefix)
+                    # Level 5+（即 ###### 或更多）由 check_level_overflow 处理
+                    # 这里只处理 Level 1-4 范围内的无编号标题
+                    if level_num is not None:
+                        titles.append(TitleInfo(
+                            line_num=line_num,
+                            level=level_num,
+                            raw_line=line,
+                            prefix=prefix,
+                            numbering="(missing)",
+                            content=content,
+                            is_valid_format=False
+                        ))
+
     return titles
 
 
@@ -290,6 +320,30 @@ def check_format_issues(titles: List[TitleInfo]) -> List[Dict]:
 
     for title in titles:
         if title.is_valid_format:
+            continue
+
+        # 优先处理"完全无编号"的情况（numbering == "(missing)"），
+        # 给出更清晰的错误信息——这是真实文档中最常见的问题
+        if title.numbering == "(missing)":
+            if title.level == 1:
+                expected_format = "## {n}. {content}"
+                hint = "缺少编号，应在 ## 后添加形如 '1.' 的编号"
+            elif title.level == 2:
+                expected_format = "### {n}.{m} {content}"
+                hint = "缺少编号，应在 ### 后添加形如 '1.1' 的编号"
+            elif title.level == 3:
+                expected_format = "#### ({k}) {content}"
+                hint = "缺少编号，应在 #### 后添加形如 '(1)' 的编号"
+            else:  # level 4
+                expected_format = "##### {circled_n} {content}"
+                hint = "缺少编号，应在 ##### 后添加形如 '①' 的带圈数字"
+            errors.append({
+                "line": title.line_num,
+                "type": "format",
+                "level": f"Level {title.level}",
+                "message": f"Level {title.level} 标题缺少编号：当前为 '{title.raw_line}'，期望格式 '{expected_format}'（{hint}）",
+                "severity": "error"
+            })
             continue
 
         # 检查格式问题
@@ -384,6 +438,11 @@ def check_numbering_increment(titles: List[TitleInfo]) -> Dict:
     current_level_1 = None  # 当前所在的章
 
     for title in titles:
+        # 跳过"完全无编号"的标题——它们已经在 check_format_issues 中报告过
+        # format 错误，这里不应再尝试解析编号（否则 int() 会失败）
+        if title.numbering == "(missing)":
+            continue
+
         if title.level == 1:
             level_1_last += 1
             num = int(title.numbering)
@@ -532,10 +591,14 @@ def check_numbering_order(titles: List[TitleInfo]) -> List[Dict]:
     """
     warnings = []
 
+    # 过滤掉"完全无编号"的标题——它们已经在 check_format_issues 中报告过，
+    # 这里无法解析编号，也不应再产生噪音 warning
+    valid_titles = [t for t in titles if t.numbering != "(missing)"]
+
     # 按层级分组
-    level_2_titles = [t for t in titles if t.level == 2]
-    level_3_titles = [t for t in titles if t.level == 3]
-    level_4_titles = [t for t in titles if t.level == 4]
+    level_2_titles = [t for t in valid_titles if t.level == 2]
+    level_3_titles = [t for t in valid_titles if t.level == 3]
+    level_4_titles = [t for t in valid_titles if t.level == 4]
 
     # 检查 Level 2 编号顺序
     for i in range(1, len(level_2_titles)):

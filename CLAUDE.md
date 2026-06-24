@@ -12,7 +12,7 @@ This repo is a **Claude Code plugin marketplace** (`office-tool-marketplace`) co
 
 `.claude-plugin/marketplace.json` registers all plugins with their source paths. Plugins are installed by users via `/plugin marketplace add` and `/plugin install`.
 
-### note-tool Plugin
+### note Plugin
 
 Document format conversion, content styling, directory archiving, and document rewriting.
 
@@ -37,7 +37,7 @@ Each plugin lives in its own top-level directory with:
 
 ## Development Directories
 
-- **repo-desktop/workspaces/**: Development workspaces for each plugin (pyramid, note-tool). Temporary files generated during the development and testing are all placed in this directory.
+- **repo-desktop/workspaces/**: Development workspaces for each plugin (note). Temporary files generated during the development and testing are all placed in this directory.
 - **repo-desktop/regression/**: Regression test specs (markdown format) for plugin features
 - **repo-desktop/chats/**: Chat transcripts and notes from plugin development sessions
 - **.claude/commands/**: Project-level slash commands (e.g., `md-fix-voice-text`)
@@ -49,7 +49,7 @@ Use `uv` to create a Python 3.12 venv (`.venv`) for any Python code in this repo
 
 ## Runtime Dependencies
 
-- Python ≥3.12 + `uv` package manager (for note-tool skills)
+- Python ≥3.12 + `uv` package manager (for note skills)
 - `markitdown[all]==0.1.3` (installed on-demand into `.venv`)
 - TUNA PyPI mirror (`https://pypi.tuna.tsinghua.edu.cn/simple/`) used for Chinese network acceleration
 

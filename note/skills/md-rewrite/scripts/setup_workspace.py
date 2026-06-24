@@ -59,6 +59,19 @@ def setup_workspace(source_file_path: str) -> dict:
     rewritten_file_path = source_file_dir / f"{source_file_name}_rewritten.md"
     backup_file_path = workspace_directory / f"{source_file_name}_backup.md"
 
+    # 覆盖保护：如果 rewritten 副本已存在且与源文件 MD5 不一致，
+    # 说明用户之前已经跑过 Phase 3 改写过它——再次执行 Phase 1 会丢失改写成果。
+    # 此时通过 stderr 打印警告，但仍允许覆盖（用户可能是真的想重新开始）。
+    if rewritten_file_path.exists():
+        source_md5 = _md5(source_path)
+        rewritten_md5 = _md5(rewritten_file_path)
+        if source_md5 != rewritten_md5:
+            print(
+                f"WARNING: {rewritten_file_path} 已存在且与源文件不一致（说明已被改写过）。"
+                f"继续执行将覆盖此文件，丢失之前的改写成果。如需保留，请先备份。",
+                file=sys.stderr
+            )
+
     # 创建工作目录
     workspace_directory.mkdir(parents=True, exist_ok=True)
 
@@ -76,6 +89,16 @@ def setup_workspace(source_file_path: str) -> dict:
         "rewritten_file_path": str(rewritten_file_path),
         "backup_file_path": str(backup_file_path)
     }
+
+
+def _md5(file_path: Path) -> str:
+    """计算文件的 MD5 哈希"""
+    import hashlib
+    h = hashlib.md5()
+    with open(file_path, 'rb') as f:
+        for chunk in iter(lambda: f.read(8192), b''):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def main():
