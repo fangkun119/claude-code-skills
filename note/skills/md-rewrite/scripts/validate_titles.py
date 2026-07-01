@@ -119,10 +119,19 @@ def iter_code_aware_lines(file_path: str):
             line = raw_line.rstrip()
 
             if fence_len > 0:
-                # 当前在代码块内：只有"相同数量反引号"的行能关闭它
-                if fence_close_re and fence_close_re.match(line):
-                    fence_len = 0
-                    fence_close_re = None
+                # 当前在代码块内：只有遇到"相同数量反引号"的行才能关闭它
+                # 检查行开头是否有恰好 fence_len 个反引号（允许行首最多3个空格缩进）
+                close_match = re.match(r'^ {0,3}`{%d}' % fence_len, line)
+                if close_match:
+                    # 确保不是更长的反引号序列（避免用6个反引号关闭4个反引号围栏）
+                    next_char = line[close_match.end():close_match.end()+1] if close_match.end() < len(line) else ''
+                    if next_char != '`':
+                        # 确保关闭标记后面没有实质性内容（只有空白或为空）
+                        after_backticks = line[close_match.end():].strip()
+                        if not after_backticks or after_backticks.isspace():
+                            # 用恰好数量的反引号关闭代码块
+                            fence_len = 0
+                            fence_close_re = None
                 # 否则该行属于代码内容，跳过（不 yield）
                 continue
 
@@ -130,9 +139,8 @@ def iter_code_aware_lines(file_path: str):
             open_match = FENCE_OPEN_RE.match(line)
             if open_match:
                 fence_len = len(open_match.group(1))
-                # 关闭围栏：行首（最多 3 空格缩进）后恰好相同数量的反引号，
-                # 其后只能跟空白（CommonMark 要求关闭围栏行不含其它内容）。
-                fence_close_re = re.compile(r'^ {0,3}`{%d}\s*$' % fence_len)
+                # 记录开启时的反引号数量，后续关闭时必须数量相同
+                fence_close_re = None  # 不再需要预编译关闭正则
                 continue  # 开启行本身也不当作标题
 
             yield line_num, line
